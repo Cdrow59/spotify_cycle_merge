@@ -29,14 +29,24 @@ def custom_sort(lst):
     # Create a list to store the sorted result
     sorted_list = []
 
-    # Determine the minimum length among the groups
-    min_len = min(len(grouped[index]) for index in grouped)
-
     # Alternate between groups and extend the sorted list
-    for i in range(min_len):
-        for index in sorted(grouped):
-            sorted_list.append(grouped[index][i])
-
+    if remove_extra == True:
+        # Determine the minimum length among the groups
+        min_len = min(len(grouped[index]) for index in grouped)
+        
+        for i in range(min_len):
+            for index in sorted(grouped):
+                sorted_list.append(grouped[index][i])
+    else:
+        # Determine the maximum length among the groups
+        max_len = max(len(grouped[index]) for index in grouped)
+        
+        # Alternate between groups and extend the sorted list
+        for i in range(max_len):
+            for index in sorted(grouped):
+                if i < len(grouped[index]):
+                    sorted_list.append(grouped[index][i])
+                    
     return sorted_list
 
 def random_sort(arr):
@@ -50,6 +60,7 @@ def extract_second_elements(list_of_tuples):
     return [tup[1] for tup in list_of_tuples]
 
 shuffle = True
+remove_extra = False
 playlists = [
     "spotify:playlist:0fP2GmLGb5FCS4GvBiS3lu",
     "spotify:playlist:0w4vurwPbF5sv6tUEBEsWK",
@@ -77,7 +88,7 @@ else:
 
 #Remove First/Tuple element after sorting
 track_uris = extract_second_elements(sort)
-
+print(len(rand))
 #Chunking Setup
 a_list = track_uris
 chunked_list = list()
