@@ -68,13 +68,21 @@ playlists = [
 ]
 data = []
 print("PLease wait this may take a while!")
+# Iterate over playlists
 for index, playlist in enumerate(playlists):
-    # Retrieve the playlist tracks
-    tracks = sp.playlist_tracks(playlist)
+    
+    # Retrieve the first page of tracks in the playlist
+    results = sp.playlist_tracks(playlist)
 
-    # Extract track names and artists from the response
-    track_info = []
-    for item in tracks['items']:
+    playlist_tracks = results['items']
+    
+    # Iterate through additional pages if available
+    while results['next']:
+        results = sp.next(results)
+        playlist_tracks.extend(results['items'])
+    
+    # Process the retrieved tracks
+    for item in playlist_tracks:
         track = item['track']
         track_id = track['id']
         data.append((index, track_id))
@@ -88,7 +96,7 @@ else:
 
 #Remove First/Tuple element after sorting
 track_uris = extract_second_elements(sort)
-print(len(rand))
+
 #Chunking Setup
 a_list = track_uris
 chunked_list = list()
