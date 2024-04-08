@@ -12,11 +12,9 @@ client_id = "09cfdea368b64101b4c4fcc3508ab23f"
 client_secret = "44a2130e4810455eb08c6a265e54e84c"
 redirect_uri = 'http://localhost:8000/callback'
 
-filename = (os.path.splitext(os.path.basename(__file__))[0])
-cache_path = ("C:\\Users\\Clayton\\AppData\\Local\\Temp\\vscode\\" +filename+ ".cache")
 
 # Create a Spotify client instance with authorization and custom cache
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri, scope='playlist-modify-public',cache_path=cache_path))
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri, scope='playlist-modify-public',cache_path=".cache"))
 
 #Define Functions
 def custom_sort(lst):
@@ -96,9 +94,10 @@ else:
 
 #Remove First/Tuple element after sorting
 track_uris = extract_second_elements(sort)
+checked_track_uris = [uri for uri in track_uris if uri is not None]
 
 #Chunking Setup
-a_list = track_uris
+a_list = checked_track_uris
 chunked_list = list()
 chunk_size = 10000
 n_chunks = 0
