@@ -1,4 +1,5 @@
 import os
+import sys
 import spotipy
 import random
 from spotipy.oauth2 import SpotifyClientCredentials
@@ -38,7 +39,7 @@ def custom_sort(target):
     return result
 
 #Configure Script
-seed = 0
+setseed = None
 
 playlists = [
     "spotify:playlist:5DDg9WcDDC54z69Y51KSmW",
@@ -47,6 +48,15 @@ playlists = [
     "spotify:playlist:3mybWjdM3iddZDoB00XGJs"
 ]
 
+#Set Seed logic
+if setseed is None:
+    seed = random.randrange(sys.maxsize)
+    rng = random.Random(seed)
+    print("Seed was:", seed)
+else:
+    seed = setseed
+    print("Seed was:", seed)
+    
 # Initialize an empty dictionary to store the data
 data = {}
 
